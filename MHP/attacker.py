@@ -3,7 +3,8 @@ __author__ = 'RetR0'
 import threading
 import socket
 
-host = '192.168.0.169'
+host = input("\nIP address of the target : ")
+print("\n")
 port = int('55555')
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
