@@ -1,3 +1,4 @@
+from pydoc import cli
 import threading, socket, sys
 
 
@@ -87,10 +88,14 @@ def brdcst():
         print(help)
     if 'DISCONNECT' in a:
         a = bytearray(a.encode('utf-8'))
-        for client in clients_list:
-            print (B+"\n    ["+P+str(clients_list.index(client))+B+"] - "+P+str(address_list[clients_list.index(client)])+W)
-        client = clients_list[int(input(B+"\n  client index :"+W))] 
-        print()     
+        try:
+            for client in clients_list:
+                print (B+"\n    ["+P+str(clients_list.index(client))+B+"] - "+P+str(address_list[clients_list.index(client)])+W)
+            client = clients_list[int(input(B+"\n  client index :"+W))] 
+        except:
+            print(R+"NOTHING"+W)
+            brdcst()
+        print()
         client.send(a)
         print (R+"\nDisconnected at "+G+str(address_list[clients_list.index(client)])+'\n'+W)
         clients_list.remove(client)
@@ -120,6 +125,7 @@ def main():
                     client = clients_list[int(input(B+"\n  client index :"+W))] 
                 except:
                     ask()
+            ask()
             print()
             console(client)
         if "CLIENT" in a:
@@ -130,9 +136,14 @@ def main():
             brdcst()
         if a == 'DISCONNECT':
             a = bytearray(a.encode('utf-8'))
-            for client in clients_list:
-                print (B+"\n    ["+P+str(clients_list.index(client))+B+"] - "+P+str(address_list[clients_list.index(client)])+W)
-            client = clients_list[int(input(B+"\n  client index :"+W))] 
+            def ask():
+                try:
+                    for client in clients_list:
+                        print (B+"\n    ["+P+str(clients_list.index(client))+B+"] - "+P+str(address_list[clients_list.index(client)])+W)
+                    client = clients_list[int(input(B+"\n  client index :"+W))] 
+                except:
+                    ask()
+            ask()
             print()     
             client.send(a)
             print (R+"\nDisconnected at "+G+str(address_list[clients_list.index(client)])+'\n'+W)
@@ -160,4 +171,5 @@ print (B+'\nServer is running on '+O+host+B+' using port '+O+str(port)+B+'...\n'
 
 main()
 
-#version 1.1
+
+#version 1.3
