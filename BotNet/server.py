@@ -1,5 +1,6 @@
-import threading, socket, sys
+import threading, socket, sys, os
 
+os.system('clear')
 
 #color console
 W = '\033[0m' #white
@@ -58,7 +59,7 @@ thread = threading.Thread(target=listen)
 thread.start()
 
 def console(client):
-    a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+str(address_list[clients_list.index(client)])+B+"_"+P+"FROM"+B+"_"+P+str(host)+B+"#"+P+"¬ "+W) 
+    a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+str(address_list[clients_list.index(client)])+B+"_"+P+"FROM"+B+"_"+P+str(host)+O+":"+P+str(port)+B+"#"+P+"¬ "+W) 
     if 'QUIT' in a:
         main()
     if 'HELP' in a:
@@ -82,7 +83,7 @@ def broadcast(message):
     print("")
 
 def brdcst():
-    a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+"NODE1"+B+"_"+P+"FROM"+B+"_"+P+host+B+"#"+P+"¬"+W) 
+    a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+"NODE1"+B+"_"+P+"FROM"+B+"_"+P+host+O+":"+P+str(port)+B+"#"+P+"¬"+W) 
     if 'QUIT' in a:
         main()
     if 'HELP' in a:
@@ -135,14 +136,14 @@ def reciv(client):
 
 def main():
     while True:
-        a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+host+B+"#"+P+"¬"+W) 
+        a = input(P+"HACKER"+B+"_"+O+"@"+B+"_"+P+host+O+":"+P+str(port)+B+"#"+P+"¬"+W) 
         if "QUIT" in a:
             print (R+"\nQUITTING...")
             server.close()
             exit(-1)
         if "CONSOLE" in a:
             console_handle()
-        if "CLIENT" in a:
+        if a == "CLIENT":
             print (B+"\nCLIENT_LIST\n")
             for client in clients_list:
                 print (B+"\n    ["+P+str(clients_list.index(client))+B+"] - "+P+str(address_list[clients_list.index(client)])+W)
@@ -178,6 +179,10 @@ def main():
         
         if 'HELP' in a:
             print(help)
+
+        if a == 'CLEAR':
+            os.system('clear')
+
         else:
             print(help)
             main()
